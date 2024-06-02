@@ -64,9 +64,6 @@ const CreateEvent = () => {
   });
 
   const handleDatePickerChange = ({ name, value }: any) => {
-    console.log({
-      name, value
-    })
     setValue(name, value);
 
     clearErrors(name);

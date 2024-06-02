@@ -58,7 +58,7 @@ router.get("/", async (req, res) => {
 
     res.send(data);
   } catch (error) {
-    console.log(error);
+    res.status(500).send(error);
   }
 });
 
@@ -68,7 +68,7 @@ router.get("/:id", verifyToken, async (req, res) => {
 
     res.send(data);
   } catch (error) {
-    console.log(error);
+    res.status(500).send(error);
   }
 });
 
@@ -96,7 +96,7 @@ router.put("/:id/approve", async (req, res) => {
 
     res.send(data);
   } catch (error) {
-    console.log(error);
+    res.status(500).send(error);
   }
 });
 
@@ -123,7 +123,7 @@ router.put("/:id/reject", async (req, res) => {
 
     res.send(data);
   } catch (error) {
-    console.log(error);
+    res.status(500).send(error);
   }
 });
 
@@ -134,8 +134,6 @@ router.post("/", async (req, res) => {
     if (req.headers.authorization) {
       userData = jwtDecode(req.headers.authorization);
     }
-
-    console.log(userData)
 
     if (userData.role === "Vendor") {
       res.send(403);
@@ -149,7 +147,7 @@ router.post("/", async (req, res) => {
 
     res.send(newEvent);
   } catch (error) {
-    console.log(error);
+    res.status(500).send(error);
   }
 });
 

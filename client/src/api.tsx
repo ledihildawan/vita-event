@@ -14,11 +14,6 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log(error)
-    // if (error.response.status === 401) {
-    //   location.href = '/signin'
-    // }
-
     return error;
   }
 );

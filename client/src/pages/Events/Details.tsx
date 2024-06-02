@@ -71,11 +71,9 @@ const EventDetails = () => {
     defaultValues: {
       vendor: u?.vendor?._id,
       remarks: '',
-      confirmedDate: '',
     },
     resolver: yupResolver(yup.object({
       remarks: yup.string().required('Remarks is required'),
-      confirmedDate: yup.date().required(),
     })),
   });
 
@@ -98,7 +96,7 @@ const EventDetails = () => {
 
       refetch();
     },
-    mutationFn: (): Promise<any> => api.put(`events/${event._id}/reject`, formDataApprove.getValues()),
+    mutationFn: (): Promise<any> => api.put(`events/${event._id}/reject`, formDataReject.getValues()),
   });
 
   const handleCancel = (type: string): void => {
@@ -342,33 +340,22 @@ const EventDetails = () => {
               </button>
             </div>
 
-            <form action="#" className="py-6.5">
-              <div className="mb-6">
-                <Select
-                  name="confirmedDate"
-                  label="Confirm Date"
-                  options={proposedDates}
-                  required={true}
-                  onChange={(data) => { handleSelectChange('reject', data) }}
-                  placeholder="Select confirm date"
-                />
-                {formDataReject.formState.errors?.confirmedDate && <div className="text-sm text-red-500">Confirm Date is required</div>}
-              </div>
+            <form className="py-6.5">
               <div>
                 <label className="mb-2.5 block text-black dark:text-white">
                   Remarks <span className="text-meta-1">*</span>
                 </label>
                 <Controller
-                name="remarks"
-                control={formDataReject.control}
-                render={({ field }) => (
-                  <textarea
-                    {...field}
-                    rows={6}
-                    className={`w-full rounded border-[1.5px] bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary resize-none ${formDataReject.formState.errors?.remarks ? 'border-red-500' : 'border-stroke'}`}
-                    placeholder="Type your remarks"
-                  ></textarea>
-                )}
+                  name="remarks"
+                  control={formDataReject.control}
+                  render={({ field }) => (
+                    <textarea
+                      {...field}
+                      rows={6}
+                      className={`w-full rounded border-[1.5px] bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary resize-none ${formDataReject.formState.errors?.remarks ? 'border-red-500' : 'border-stroke'}`}
+                      placeholder="Type your remarks"
+                    ></textarea>
+                  )}
                 />
                 {formDataReject.formState.errors?.remarks && <div className="mt-2 text-sm text-red-500">{formDataReject.formState.errors?.remarks.message}</div>}
               </div>

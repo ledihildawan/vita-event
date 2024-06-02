@@ -37,7 +37,7 @@ router.get("/", verifyToken, async (req, res) => {
 
     res.send(data);
   } catch (error) {
-    console.log(error);
+    res.status(500).send(error);
   }
 });
 
