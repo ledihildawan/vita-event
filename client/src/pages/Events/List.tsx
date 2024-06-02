@@ -173,7 +173,7 @@ const ListEvent = () => {
                       </Link>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                      <p className="text-black dark:text-white">{event.vendor?.name ?? event.company?.name ?? '-'}</p>
+                      <p className="text-black dark:text-white">{u?.role === "Company" ? event.vendor?.name ?? '-' : event.company?.name ?? '-'}</p>
                     </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <p className="text-black dark:text-white">{

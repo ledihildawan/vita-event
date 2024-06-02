@@ -11,13 +11,13 @@ const router = express.Router();
 router.use(verifyToken)
 
 router.get("/", async (req, res) => {
-  let userData = null;
-
-  if (req.headers.authorization) {
-    userData = jwtDecode(req.headers.authorization);
-  }
-
   try {
+    let userData = null;
+
+    if (req.headers.authorization) {
+      userData = jwtDecode(req.headers.authorization);
+    }
+
     const query = {};
 
     if (req.query.term) {
@@ -27,8 +27,8 @@ router.get("/", async (req, res) => {
     if (req.query.status) {
       query.status = req.query.status;
 
-      if (req.query.status !== 'Pending') {
-        query.vendor = userData.vendor._id;
+      if (req.query.status !== 'Pending' && userData?.role === "Vendor") {
+        query.vendor = userData.vendor?._id;
       }
     }
 
