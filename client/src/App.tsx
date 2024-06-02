@@ -54,7 +54,7 @@ function App() {
               path="/signin"
               element={
                 <>
-                  <PageTitle title="Signin | x" />
+                  <PageTitle title="Signin | VitaEvent" />
                   <SignIn />
                 </>
               }
