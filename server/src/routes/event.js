@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
       query.status = req.query.status;
 
       if (req.query.status !== 'Pending' && userData?.role === "Vendor") {
-        query.vendor = userData.vendor?._id;
+        query.vendor = userData.vendor._id;
       }
     }
 
@@ -64,7 +64,19 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", verifyToken, async (req, res) => {
   try {
+    let userData = null;
+
+    if (req.headers.authorization) {
+      userData = jwtDecode(req.headers.authorization);
+    }
+
     const data = await EventModel.findOne({ _id: req.params.id }).populate(["vendor", "company"]);
+
+    if (userData?.company._id !== data.company._id && userData?.role === "Company") {
+      res.send(403);
+
+      return;
+    }
 
     res.send(data);
   } catch (error) {
@@ -135,7 +147,7 @@ router.post("/", async (req, res) => {
       userData = jwtDecode(req.headers.authorization);
     }
 
-    if (userData.role === "Vendor") {
+    if (userData?.role === "Vendor") {
       res.send(403);
 
       return;

@@ -33,9 +33,17 @@ const EventDetails = () => {
   const [visibleModalReject, setVisibleModalReject] = useState<boolean>(false);
   const [visibleModalApprove, setVisibleModalApprove] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
   const { isLoading, refetch } = useQuery({
     queryFn: () => api.get(`events/${id}`),
     onSuccess: (res: any): void =>{
+      if (res.data.company._id !== u?.company?._id && u?.role === "Company") {
+        navigate(-1);
+
+        return;
+      }
+
       setEvent(res.data);
       setProposedDates([
         {
