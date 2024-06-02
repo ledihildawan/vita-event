@@ -1,6 +1,6 @@
-## Usage
+# ViteEvent
 
-Rename the .envexample to .env and add your MONGO_URI
+## Usage
 
 ### Install dependencies
 
