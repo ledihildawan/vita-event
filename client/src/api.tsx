@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://vita-event.onrender.com/',
+  baseURL: 'https://api-vita-event.onrender.com/',
 });
 
 api.interceptors.request.use(
