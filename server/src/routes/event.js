@@ -72,7 +72,7 @@ router.get("/:id", verifyToken, async (req, res) => {
 
     const data = await EventModel.findOne({ _id: req.params.id }).populate(["vendor", "company"]);
 
-    if (userData?.company._id !== data.company._id && userData?.role === "Company") {
+    if (userData?.company?._id !== data.company?._id && userData?.role === "Company") {
       res.send(403);
 
       return;
@@ -80,6 +80,7 @@ router.get("/:id", verifyToken, async (req, res) => {
 
     res.send(data);
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 });
