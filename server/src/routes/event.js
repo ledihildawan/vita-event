@@ -72,6 +72,12 @@ router.get("/:id", verifyToken, async (req, res) => {
 
     const data = await EventModel.findOne({ _id: req.params.id }).populate(["vendor", "company"]);
 
+    if (!data) {
+      res.send(404);
+
+      return;
+    }
+
     if (userData?.company?._id !== data.company?._id && userData?.role === "Company") {
       res.send(403);
 
