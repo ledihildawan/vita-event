@@ -78,7 +78,7 @@ router.get("/:id", verifyToken, async (req, res) => {
       return;
     }
 
-    if (userData?.company?._id !== data.company?._id && userData?.role === "Company") {
+    if (!(data.company?.equals(userData?.company?._id)) && userData?.role === "Company") {
       res.send(403);
 
       return;
