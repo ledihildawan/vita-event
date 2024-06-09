@@ -44,7 +44,7 @@ const ListEvent = () => {
     isLoading,
     isSuccess,
   } = useQuery({
-    queryKey: ['events', params],
+    queryKey: ['events', { ...params, ...parsedQs }],
     queryFn: () => api.get('events', { params: { ...params, ...parsedQs }, }),
     onSuccess: (res: any): void  => {
       const { docs, ...dataPage } = res.data;
@@ -68,7 +68,19 @@ const ListEvent = () => {
   };
 
   const handlePageChange = (action: string): void => {
-    setParams((values: any): any => ({ ...values, page: action === 'next' ? values.page + 1 : values.page - 1 }));
+    let page: number = params.page;
+
+    if (action === 'next') {
+      page += 1;
+    }
+
+    if (action === 'previous') {
+      page -= 1;
+    }
+
+    console.log(page)
+
+    setParams((values: any): any => ({ ...values, page }));
   }
 
   const handleSearchChange = (event: any): void => {
@@ -237,7 +249,7 @@ const ListEvent = () => {
                   <button
                     onClick={() => handlePageChange('previous')}
                     disabled={!pageData?.hasPrevPage}
-                    className={`flex items-center justify-center px-5 py-2.5 ms-0 leading-tight text-gray-500 bg-white border rounded hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white font-medium ${!pageData?.hasPrevPage ? 'border-stroke text-[#e2e8f0]' : 'border-gray-300 cursor-not-allowed'}`}
+                    className={`flex items-center justify-center px-5 py-2.5 ms-0 leading-tight text-gray-500 bg-white border rounded hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white font-medium ${!pageData?.hasPrevPage ? 'border-stroke text-[#e2e8f0] cursor-not-allowed' : 'border-gray-300'}`}
                   >
                     Previous
                   </button>
@@ -246,7 +258,7 @@ const ListEvent = () => {
                   <button
                     onClick={() => handlePageChange('next')}
                     disabled={!pageData?.hasNextPage}
-                    className={`flex items-center justify-center px-5 py-2.5 leading-tight text-gray-500 bg-white border rounded hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white font-medium ${!pageData?.hasNextPage ? 'border-stroke text-[#e2e8f0]' : 'border-gray-300 cursor-not-allowed'}`}
+                    className={`flex items-center justify-center px-5 py-2.5 leading-tight text-gray-500 bg-white border rounded hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white font-medium ${!pageData?.hasNextPage ? 'border-stroke text-[#e2e8f0] cursor-not-allowed' : 'border-gray-300'}`}
                   >
                     Next
                   </button>
